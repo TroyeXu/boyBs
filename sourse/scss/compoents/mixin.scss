@@ -1,0 +1,29 @@
+
+@mixin ab_center{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+@mixin size($w,$h){
+    width: $w;
+    height: $h;
+}
+@mixin bg-fix{
+    background-position: center center;
+    background-size: cover;
+}
+@mixin half{
+    @include size(150px,150px);
+    position: absolute;
+    background-color: rgba(white,0.2);
+    bottom:-100px;
+}
+@mixin textbgtransparent{
+        width: 100% ;
+        height: 100%;
+        background-color: rgba(0,0,0,0.35);
+        border-radius: 10px;
+        padding: 30px;    
+}

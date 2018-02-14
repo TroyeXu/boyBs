@@ -1,0 +1,22 @@
+{
+  "name": "bs-blog",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "TroyeXu <zooka8548@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/TroyeXu/git-gulp",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "jquery": "^3.2.1",
+    "hover": "^2.1.1"
+  }
+}
