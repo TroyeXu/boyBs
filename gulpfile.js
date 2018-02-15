@@ -150,7 +150,7 @@ gulp.task('imagemin', () =>
 //壓縮圖片
 
 gulp.task('deploy', function () {
-    return gulp.src('./public/**/*')
+    return gulp.src('./.publish/**/*')
         .pipe($.ghPages());
 });
 //發部githubpage
