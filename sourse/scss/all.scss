@@ -49,7 +49,7 @@ h4{
 
 //jum
 .jumbotron{
-    background-image: url('/img/banner2.jpg');
+    background-image: url('../img/banner2.jpg');
     height: 101vh;
     background-size: cover;
     background-position: center center;
@@ -91,16 +91,17 @@ h4{
     background-position: 45% center;
     background-size: cover;
     background-repeat: no-repeat;    
-    background-image: url('/img/director.png');
+    background-image: url('../img/director.png');
 }
 //ca
 #ca{
+    
     .fontfix{
         font-weight: 700;
         margin-top: 84px;
     }
     h4{
-        line-height: 7;
+        line-height: 9;
     }
     .box{
         background-repeat: no-repeat;
@@ -110,7 +111,7 @@ h4{
     }
     @media (max-width: 767.98px) { 
         .box{
-        background-size: contain;
+        background-size: cover;
         }
         h4{
             line-height: 6;
@@ -124,7 +125,6 @@ h4{
     .ca-animation{
         transition: .3s ease-in-out;
         &:hover{
-            filter: brightness(0.5);
             transform: scale(1.2);
             z-index:100;
             transition: all 0.5s;
@@ -146,8 +146,8 @@ h4{
 
 //movie
 .imgFull{
-    background-image: url('/img/movie.jpg');
-    height: 80vh;
+    background-image: url('../img/movie.jpg');
+    height: 100vh;
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;

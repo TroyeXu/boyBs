@@ -6,6 +6,6 @@ $(document).ready(function () {
         //讀取href
         var targetPos = $(target).offset().top;
         //取處這些id的位置， offset有TOP與left
-        $('html, body').animate({ scrollTop: targetPos - 70 }, 1000);
+        $('html, body').animate({ scrollTop: targetPos + 200 }, 1000);
     });
 });
