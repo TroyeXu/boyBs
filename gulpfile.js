@@ -10,24 +10,25 @@ var minimist = require('minimist')
 var browserSync = require('browser-sync').create();
 var gulpSequence = require('gulp-sequence')
 
-
+//輸出環境設定
 var envOptions = {
     string: 'env',
     default: { env: 'develop' }
 } //傳入關鍵詞 預設develop
 var options = minimist(process.argv.slice(2), envOptions);//預設內容 利用minimist紀錄參數
 console.log(options);
-
+//清除暫存與public
 gulp.task('clean', function () {
     return gulp.src(['./.tmp', './public'], { read: false })
         .pipe($.clean());
 });
-gulp.task('build', gulpSequence('clean', 'jade', 'babel', 'sass', 'vendorsJs', 'imagemin'))
+//輸出build
+gulp.task('build', gulpSequence('clean', 'jade', 'babel', 'sass', 'vendorsJs', 'sasshover'))
 //部屬  watch browser 不用 /gulp build --env production 輸出才會壓縮
-gulp.task('default', ['jade', 'babel', 'sass', 'vendorsJs', 'browser-sync', 'imagemin', 'watch']);
+gulp.task('default', ['jade', 'babel', 'sass', 'vendorsJs', 'sasshover', 'browser-sync', 'imagemin', 'watch']);
 //任務合併
 
-
+//輸出html
 gulp.task('copyHTML', function () {
     return gulp.src('./sourse/**/*.html')
         .pipe($.plumber())
@@ -36,19 +37,10 @@ gulp.task('copyHTML', function () {
         .pipe(browserSync.stream());
 })
 
-
+//輸出jade
 gulp.task('jade', function () {
     return gulp.src('./sourse/**/*.jade')
-        // .pipe($.plumber())
-        // .pipe($.data(function (file) {
-        //     var json = require('./source/data/data.json');
-        //     var menus = require('./source/data/menu.json');
-        //     var source = {
-        //         data: json,
-        //         menus: menus
-        //     }
-        //     return source;
-        // }))
+        .pipe($.plumber())
         .pipe($.jade({
             pretty: true
         }))
@@ -56,6 +48,7 @@ gulp.task('jade', function () {
         .pipe(browserSync.stream());
 });
 
+//輸出sass
 gulp.task('sass', function () {
     // PostCSS AutoPrefixer
     var processors = [
@@ -68,7 +61,8 @@ gulp.task('sass', function () {
         .pipe($.sourcemaps.init()) //方便後續除錯
         .pipe($.sass({
             outputStyle: 'nested',
-            includePaths: ['./node_modules/bootstrap/scss/']
+            includePaths: ['./node_modules/bootstrap/scss/'],
+
         }).on('error', $.sass.logError))
         //上方程式編譯完成
         .pipe($.postcss(processors))
@@ -76,11 +70,29 @@ gulp.task('sass', function () {
         .pipe($.sourcemaps.write('.'))//方便後續除錯
         .pipe(gulp.dest('./public/css'))
         .pipe(browserSync.stream());
-
-
+});
+//輸出sass
+gulp.task('sasshover', function () {
+    // PostCSS AutoPrefixer
+    var processors = [
+        autoprefixer({
+            browsers: ['last 3 version']
+        })
+    ];
+    return gulp.src('./bower_components/hover/**/*.scss', )
+        .pipe($.plumber())
+        .pipe($.sourcemaps.init()) //方便後續除錯
+        .pipe($.sass({
+        }).on('error', $.sass.logError))
+        //上方程式編譯完成
+        .pipe($.postcss(processors))
+        .pipe($.if(options.env === 'production', $.minifyCss()))
+        .pipe($.sourcemaps.write('.'))//方便後續除錯
+        .pipe(gulp.dest('./public/css/hover'))
+        .pipe(browserSync.stream());
 });
 
-
+//輸出js
 gulp.task('babel', () => {
     return gulp.src('./sourse/js/**/*.js')
         .pipe($.plumber())
@@ -95,21 +107,23 @@ gulp.task('babel', () => {
         .pipe(browserSync.stream());
 });
 
+//bower
 gulp.task('bower', function () {
     return gulp.src(mainBowerFiles())
         .pipe(gulp.dest('./.tmp/vendors'));
 });
 
+//bower
 gulp.task('browser-sync', function () {
     browserSync.init({
         server: {
             baseDir: "./public"
         },
-        reloadDebounce: 2000
+        reloadDebounce: 1000
     });
 });
 
-
+//合併js
 gulp.task('vendorsJs', ['bower'], function () {
     return gulp.src([
         './.tmp/vendors/jquery.js',
@@ -143,3 +157,4 @@ gulp.task('deploy', function () {
         .pipe($.ghPages());
 });
 //發部githubpage
+
