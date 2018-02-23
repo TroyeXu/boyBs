@@ -23,9 +23,9 @@ gulp.task('clean', function () {
         .pipe($.clean());
 });
 //輸出build
-gulp.task('build', gulpSequence('clean', 'jade', 'babel', 'sass', 'vendorsJs', 'sasshover'))
+gulp.task('build', gulpSequence('clean', 'imagemin', 'jade', 'babel', 'sass', 'vendorsJs', 'sasshover'))
 //部屬  watch browser 不用 /gulp build --env production 輸出才會壓縮
-gulp.task('default', ['jade', 'babel', 'sass', 'vendorsJs', 'sasshover', 'browser-sync', 'imagemin', 'watch']);
+gulp.task('default', ['imagemin', 'jade', 'babel', 'sass', 'vendorsJs', 'sasshover', 'browser-sync', 'watch']);
 //任務合併
 
 //輸出html
@@ -146,7 +146,7 @@ gulp.task('watch', function () {
 
 
 gulp.task('imagemin', () =>
-    gulp.src('sourse/images/*')
+    gulp.src('./sourse/images/**/*')
         .pipe($.if(options.env === 'production', $.imagemin()))
         .pipe(gulp.dest('./public/img'))
 );
