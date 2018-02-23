@@ -9,3 +9,9 @@ $(document).ready(function () {
         $('html, body').animate({ scrollTop: targetPos + 200 }, 1000);
     });
 });
+
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag('js', new Date());
+
+gtag('config', 'UA-89388320-3');
